@@ -26,4 +26,6 @@ public interface UserService {
 
     List<MyUser> searchUser(String keyword);
 
+    boolean verifyUser(MyUser user);
+
 }

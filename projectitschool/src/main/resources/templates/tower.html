@@ -39,9 +39,9 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="index-logged-out">Home</a></li>
-                <li><a href="about">About</a></li>
-                <li class="active"><a href="shop">Shop</a></li>
+                <li><a href="/index-logged-out">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li class="active"><a href="/shop">Shop</a></li>
                 <li><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -56,22 +56,34 @@
             <div class="col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading" th:text="${tower.name}"></div>
-                    <div class="panel-body"><img th:src=${tower.imageSource} class="img-responsive" style="width:100%" alt="Image"></div>
+                    <div class="panel-body"><img th:src=${tower.imageSource} class="img-responsive" style="width:100%" alt="Image">
+                    <p>Model: <span th:text="${tower.model}"></span></p>
+                    <p th:if="${tower.hasWarranty == true}">Warranty: <span th:text="${tower.warrantyLength} + ' years'"></span></p>
+                    <p>Processor: <span th:text="${tower.processor}"></span></p>
+                    <p>GPU: <span th:text="${tower.GPU}"></span></p>
+                    <p>Motherboard: <span th:text="${tower.motherboard}"></span></p>
+                    <p>RAM: <span th:text="${tower.RAM}"></span></p>
+                    <p th:if="${tower.hasHDD == true}">HDD: <span th:text="${tower.HDD}"></span></p>
+                    <p th:if="${tower.hasSSD == true}">HDD: <span th:text="${tower.SSD}"></span></p>
+                    <p>Case: <span th:text="${tower.towerCase}"></span></p>
+                    <p>Power Supply: <span th:text="${tower.powerSupply}"></span></p>
+                    <p>Cooling: <span th:text="${tower.cooling}"></span></p>
+                    <p>Front Panel: <span th:text="${tower.frontPanel}"></span></p>
+                    <p>Back Panel: <span th:text="${tower.backPanel}"></span></p>
+                    <p>Networking: <span th:text="${tower.networking}"></span></p>
+                    <p th:if="${tower.hasOpticUnit == true}">Optic Unit: <span th:text="${tower.opticUnit}"></span></p>
+                    <p th:if="${tower.hasOperatingSystem == true}">OS: <span th:text="${tower.operatingSystemName}"></span></p>
+                    <br>
+                    <br>
+                    <p>Price: <span th:text="${tower.price} + '$'"></span></p>
+                    <p th:if="${tower.hasPaymentPlan == true}">Supports Payment Plan!</p>
+                    <input type="button" value="Buy Now!" style="float: right; background-color: #4CAF50; color: white; border: none; font-size: 20px; border-radius: 12px;">
+                    </div>
                 </div>
             </div>
     </div>
 </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading" th:text="${tower.name}"></div>
-                <div class="panel-body"><img th:src=${tower.imageSource} class="img-responsive" style="width:100%" alt="Image"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <br>
 </div><br><br>

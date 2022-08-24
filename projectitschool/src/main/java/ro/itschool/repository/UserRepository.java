@@ -20,4 +20,9 @@ public interface UserRepository extends JpaRepository<MyUser, Long> {
                     "OR u.user_id LIKE %:keyword%",
             nativeQuery = true)
     List<MyUser> searchUser (@Param("keyword") String keyword);
+
+//    @Query(
+//            value = "SELECT * FROM my_user u WHERE u.username = ':username' AND u.password = ':password'", nativeQuery=true
+//    )
+//    MyUser verifyUser(@Param("username") String username, @Param("password") String password);
 }

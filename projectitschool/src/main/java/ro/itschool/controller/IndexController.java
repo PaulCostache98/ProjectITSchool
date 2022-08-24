@@ -19,7 +19,7 @@ public class IndexController {
     @Autowired
     private TowerService towerService;
 
-    @RequestMapping(value = {"/index-logged-out", "/"})
+    @RequestMapping(value = {"/index-logged-out"})
     String indexLoggedOut(Model model) {
         Random random = new Random();
         List<Tower> towerList = towerService.findAll();

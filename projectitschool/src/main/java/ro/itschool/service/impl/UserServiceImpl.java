@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ro.itschool.config.WebSecurityConfig;
 import ro.itschool.entity.MyUser;
 import ro.itschool.entity.Role;
 import ro.itschool.repository.RoleRepository;
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
+    @Autowired
+    BCryptPasswordEncoder encoder;
 
     @Autowired
     EmailBodyService emailBodyService;
@@ -92,6 +96,13 @@ public class UserServiceImpl implements UserService {
     public List<MyUser> searchUser(String keyword) {
         return userRepository.searchUser(keyword);
 
+    }
+
+    @Override
+    public boolean verifyUser(MyUser user) {
+
+        MyUser userVerify = userRepository.findByUsernameIgnoreCase(user.getUsername());
+        return encoder.matches(user.getPassword(), userVerify.getPassword());
     }
 
 

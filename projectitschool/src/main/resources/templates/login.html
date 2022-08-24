@@ -1,90 +1,57 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
-<!--<head>-->
-<!--  <title>PC Shop</title>-->
-<!--  <meta charset="utf-8">-->
-<!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
-<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
-<!--  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
-<!--  <style>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <br><br>
+    <title>Login page</title>
 
-<!--    /* Add a gray background color and some padding to the footer */-->
-<!--    footer {-->
-<!--      background-color: #f2f2f2;-->
-<!--      padding: 25px;-->
-<!--    }-->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
 
-<!--    .carousel-inner img {-->
-<!--      width: 100%; /* Set width to 100% */-->
-<!--      min-height: 200px;-->
-<!--    }-->
+    <style>
+    Body { margin: 0; font-family: "Optima", sans-serif, color: black;
+    }
+    h1 { font-size: 40px; color: black; font-family: "Optima", sans-serif;
+    }
+    h2 { font-size: 15px; color: black; font-family: "Optima", sans-serif;
+    }
+    </style>
 
-<!--    /* Hide the carousel text when the screen is less than 600 pixels wide */-->
-<!--    @media (max-width: 600px) {-->
-<!--      .carousel-caption {-->
-<!--        display: none;-->
-<!--      }-->
-<!--    }-->
-<!--  </style>-->
-<!--</head>-->
-<!--<body>-->
+</head>
+<body>
+<div align="center">
+    <h1>Login page</h1>
+</div>
+<br>
+<div class="container" align="center" style="max-width:330px; margin:0 auto">
 
-<!--<nav class="navbar navbar-inverse">-->
-<!--  <div class="container-fluid">-->
-<!--    <div class="navbar-header">-->
-<!--      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">-->
-<!--        <span class="icon-bar"></span>-->
-<!--        <span class="icon-bar"></span>-->
-<!--        <span class="icon-bar"></span>-->
-<!--      </button>-->
-<!--      <a class="navbar-brand" href="#">Logo</a>-->
-<!--    </div>-->
-<!--    <div class="collapse navbar-collapse" id="myNavbar">-->
-<!--      <ul class="nav navbar-nav">-->
-<!--        <li><a href="index-logged-out">Home</a></li>-->
-<!--        <li><a href="about">About</a></li>-->
-<!--        <li><a href="shop">Shop</a></li>-->
-<!--        <li><a href="#">Contact</a></li>-->
-<!--      </ul>-->
-<!--      <ul class="nav navbar-nav navbar-right">-->
-<!--        <li class="active"><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</nav>-->
-<!--<body>-->
-<!--<div align="center">-->
-<!--  <h1>Login page</h1>-->
-<!--</div>-->
-<!--<br>-->
-<!--<div class="container" align="center" style="max-width:330px; margin:0 auto">-->
+    <div th:if="${loginError}" class="alert alert-danger" role="alert">
+        <p class="error">Wrong user or password</p>
+    </div>
 
-<!--  <div th:if="${loginError}" class="alert alert-danger" role="alert">-->
-<!--    <p class="error">Wrong user or password</p>-->
-<!--  </div>-->
+    <form th:action="@{/login}" method="post">
+        <div class="mx-auto">
+            <label class="control-label" for="username"><h2>Username</h2></label>
+            <input type="username" id="username" class="from-control" name="username"
+                   autofocus="autofocus"/></div>
+        <br/>
+        <div class="mx-auto">
+            <label class="control-label" for="password"><h2>Password</h2></label>:
+            <input type="password" id="password" class="from-control" name="password"/></div>
+        <br/>
+        <div style="height:5px;">
 
-<!--  <form th:action="@{/login}" method="post">-->
-<!--    <div class="mx-auto">-->
-<!--      <label class="control-label" for="username"><h2>Username</h2></label>-->
-<!--      <input type="username" id="username" class="from-control" name="username"-->
-<!--             autofocus="autofocus"/></div>-->
-<!--    <br/>-->
-<!--    <div class="mx-auto">-->
-<!--      <label class="control-label" for="password"><h2>Password</h2></label>:-->
-<!--      <input type="password" id="password" class="from-control" name="password"/></div>-->
-<!--    <br/>-->
-<!--    <div style="height:5px;">-->
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success" >Login</button>
+            <form action="@{/register}">
+                <button type="button" class="btn btn-success" th:onclick="|window.location.href='/register'|">Register</button>
+            </form>
+        </div>
+    </form>
 
-<!--    </div>-->
-<!--    <div class="form-group">-->
-<!--      <button type="submit" class="btn btn-success" >Login</button>-->
-<!--      <form action="@{/register}">-->
-<!--        <button type="button" class="btn btn-success" th:onclick="|window.location.href='/register'|">Register</button>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--  </form>-->
-
-<!--</div>-->
-<!--</body>-->
-<!--</html>-->
+</div>
+</body>
+</html>
