@@ -1,10 +1,13 @@
 package ro.itschool.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,14 +26,27 @@ public class LoginController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    HttpServletRequest request;
+
+
     @RequestMapping("/login")
-    public String login() {
-        System.out.println("**********************************************");
+    public String login(Model model) {
+        request.getSession();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+        if(authentication == null) {
             return "login";
         }
-        System.out.println("#######################################################");
+        if(authentication.getPrincipal().toString().equalsIgnoreCase("anonymousUser")) {
+            authentication.setAuthenticated(false);
+            return "login";
+        }
+        if(!authentication.isAuthenticated()) {
+            return "login";
+        }
+
+
+        System.out.println("*************************************** " + authentication.getName());
         return "index";
     }
 

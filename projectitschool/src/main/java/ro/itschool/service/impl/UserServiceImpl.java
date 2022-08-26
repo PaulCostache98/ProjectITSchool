@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ro.itschool.config.WebSecurityConfig;
 import ro.itschool.entity.MyUser;
 import ro.itschool.entity.Role;
+import ro.itschool.exception.UserNotFoundException;
 import ro.itschool.repository.RoleRepository;
 import ro.itschool.repository.UserRepository;
 import ro.itschool.service.UserService;
@@ -63,7 +64,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteById(long id) {
+//        Optional.of(userRepository.findById(id)).orElseThrow(UserNotFoundException::new);
         userRepository.deleteById(id);
+
     }
 
     public MyUser saveUser(MyUser receivedUser) {
