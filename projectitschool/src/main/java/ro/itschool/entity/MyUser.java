@@ -1,5 +1,7 @@
 package ro.itschool.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class MyUser implements UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -59,6 +62,10 @@ public class MyUser implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
+    @ToString.Exclude
+    private Set<Cart> carts;
 
     @Transient
     private String passwordConfirm;

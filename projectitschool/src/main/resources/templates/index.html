@@ -86,7 +86,7 @@ form.example::after {
                 <li><a href="#">Contact</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="isAuthenticated()"><a href="account" th:text = "${user.getFullName()}"></a></li>
+                <li sec:authorize="isAuthenticated()"><a href="account" th:text = "${name}"></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
@@ -180,7 +180,7 @@ form.example::after {
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                         <div class="item active">
-                            <img th:src="${tower1.imageSource}" alt="Image">
+                            <img class="d-block" style="width:100%" th:src="${tower1.imageSource}" alt="Image">
                             <div class="carousel-caption">
                                 <h3 th:text="${tower1.name}"></h3>
                                 <p th:text="${tower1.price} + '$'"></p>

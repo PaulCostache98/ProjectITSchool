@@ -40,13 +40,17 @@ public class TowerServiceImpl implements TowerService {
 
     @Override
     public Tower saveTower(Tower receivedTower) {
-        Tower auxTower = new Tower(receivedTower);
 
-        return towerRepository.save(auxTower);
+        return towerRepository.save(receivedTower);
     }
 
     @Override
     public void updateTower(Tower tower) {
         towerRepository.save(tower);
+    }
+
+    @Override
+    public List<Tower> searchTower(String keyword) {
+        return towerRepository.searchTower(keyword);
     }
 }

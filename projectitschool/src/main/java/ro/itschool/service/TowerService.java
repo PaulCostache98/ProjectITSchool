@@ -19,4 +19,6 @@ public interface TowerService {
     Tower saveTower(Tower tower);
 
     void updateTower(Tower tower);
+
+    List<Tower> searchTower(String keyword);
 }

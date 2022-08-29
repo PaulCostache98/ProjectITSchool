@@ -14,9 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ro.itschool.entity.MyUser;
+import ro.itschool.entity.Tower;
 import ro.itschool.repository.UserRepository;
+import ro.itschool.service.TowerService;
 import ro.itschool.service.UserService;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 
@@ -27,6 +30,9 @@ public class LoginController {
     UserService userService;
 
     @Autowired
+    TowerService towerService;
+
+    @Autowired
     HttpServletRequest request;
 
 
@@ -34,19 +40,14 @@ public class LoginController {
     public String login(Model model) {
         request.getSession();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication == null) {
+        List<Tower> towerList = towerService.findAll();
+        Tower tower1 = towerList.remove(1);
+        model.addAttribute("towers", towerList);
+        model.addAttribute("tower1", tower1);
+//        model.addAttribute("name", userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName()).getFullName());
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        if(authentication.getPrincipal().toString().equalsIgnoreCase("anonymousUser")) {
-            authentication.setAuthenticated(false);
-            return "login";
-        }
-        if(!authentication.isAuthenticated()) {
-            return "login";
-        }
-
-
-        System.out.println("*************************************** " + authentication.getName());
         return "index";
     }
 

@@ -39,13 +39,12 @@ public class IndexController {
     }
 
     @RequestMapping("/index")
-    String index(@ModelAttribute("object") Tower tower, Model model) {
+    String index(Model model) {
         List<Tower> towerList = towerService.findAll();
-        towerList.remove(1);
-        Tower tower1 = towerService.findById(1);
+        Tower tower1 = towerList.remove(1);
         model.addAttribute("towers", towerList);
         model.addAttribute("tower1", tower1);
-        model.addAttribute("name", userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName()));
+        model.addAttribute("name", userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName()).getFullName());
 
         return "index";
     }

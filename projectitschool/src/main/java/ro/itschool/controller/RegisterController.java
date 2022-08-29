@@ -1,5 +1,6 @@
 package ro.itschool.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class RegisterController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    HttpServletRequest request;
+
     @GetMapping(value = "/register")
     public String registerForm(Model model) {
         MyUser user = new MyUser();
@@ -35,7 +39,7 @@ public class RegisterController {
     @PostMapping(value = "/register")
     public String registerUser(@ModelAttribute("user") @RequestBody MyUser user) {
         if (user.getPassword().equals(user.getPasswordConfirm())) {
-
+            request.getSession();
             user.setRoles(Collections.singleton(new Role("ROLE_USER")));
             userService.saveUser(user);
             return "register-success";
