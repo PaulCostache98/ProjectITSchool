@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+      xmlns:class="http://www.w3.org/1999/xhtml">
+<head>
+    <title>PC Shop</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link th:href="@{/css/sidenav.css}" rel="stylesheet"/>
+
+    <style>
+            /* Style the tab */
+    .tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    }
+
+    /* Style the buttons that are used to open the tab content */
+    .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+    background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+    background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/navbar.html :: topnav"></div>
+<div th:replace="/_modals.html :: shopping-cart-modal"></div>
+
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'usersTab')">Users</button>
+    <button class="tablinks" onclick="openTab(event, 'towersTab')" id="defaultOpen">Towers</button>
+</div>
+<!-- Tab content -->
+<div id="usersTab" class="tabcontent">
+<!--        <h3 th:text="${userIteration.getFullName()}"></h3>-->
+<!--        <p>Username: <span th:text="${userIteration.getUsername()}"></span></p>-->
+<!--        <p>Full Name: <span th:text="${userIteration.getFullName()}"></span></p>-->
+<!--        <p>Email: <span th:text="${userIteration.getEmail()}"></span></p>-->
+<!--        <p>Roles: <span th:each="role : ${userIteration.getRoles()}" th:text="${role.getName().replaceFirst('ROLE_', '')} + ' '"></span></p>-->
+<!--        <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--          <a th:href="@{'/update-user/' + ${userIteration.id}}"-->
+<!--             class="btn btn-success btn-sm">Update</a>-->
+<!--          <a  th:href="@{'/delete-user/' + ${userIteration.id}}"-->
+<!--              class="btn btn-danger btn-sm" th:if="${!userIteration.isAdmin()}">Delete</a>-->
+<!--    <form action="#" th:action="@{/save-user}" th:object="${savedUser}" method="post">-->
+<!--        <input type="hidden" th:field="*{id}"/>-->
+<!--        <input type="text" th:field="*{username}" class="form-control col-4 mb-4"/>-->
+<!--        <input type="text" th:field="*{fullName}" class="form-control col-4 mb-4"/>-->
+<!--        <input type="text" th:field="*{email}" class="form-control col-4 mb-4"/>-->
+<!--        <input type="hidden" th:field="*{password}"/>-->
+<!--        <input type="hidden" th:field="*{accountNonExpired}"/>-->
+<!--        <input type="hidden" th:field="*{accountNonLocked}"/>-->
+<!--        <input type="hidden" th:field="*{credentialsNonExpired}"/>-->
+<!--        <input type="hidden" th:field="*{enabled}"/>-->
+<!--        &lt;!&ndash;    <div th:each="role : *{roles}">&ndash;&gt;-->
+<!--        &lt;!&ndash;      <input type="hidden" th:field="${role}"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;    </div>&ndash;&gt;-->
+<!--        &lt;!&ndash;    <input type="hidden" th:field="*{carts}"/>&ndash;&gt;-->
+<!--        <button type="submit" class="btn btn-success">Save</button>-->
+<!--        <a href="/admin-page" type="button" class="btn btn-secondary">Back</a>-->
+
+<!--    </form>-->
+</div>
+<div id="towersTab" class="tabcontent">
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--            <div th:each="tower : ${towers}">-->
+<!--                <div class="col-sm-4">-->
+<!--                    <div class="panel panel-primary">-->
+<!--                        <div class="panel-heading" th:text="${tower.name}"></div>-->
+<!--                        <div class="panel-body"><a th:href="@{/towers/{id}(id=${tower.id})}"><img th:src=${tower.imageSource} class="img-responsive" style="width:100%" alt="Image"></a></div>-->
+<!--                        <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                            <a th:href="@{'/update-tower/' + ${tower.id}}"-->
+<!--                               class="btn btn-success btn-sm">Update</a>-->
+<!--                            <a  th:href="@{'/delete-tower/' + ${tower.id}}"-->
+<!--                                class="btn btn-danger btn-sm">Delete</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <form action="#" th:action="@{/save-tower}" th:object="${savedTower}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label class="col-sm-4 col-form-label"><h4>Name:</h4></label>
+        <input type="text" th:field="*{name}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Model:</h4></label>
+        <input type="text" th:field="*{model}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Warranty:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasWarranty}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>Warranty Length:</h4></label>
+        <input type="text" th:field="*{warrantyLength}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Processor:</h4></label>
+        <input type="text" th:field="*{processor}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>GPU:</h4></label>
+        <input type="text" th:field="*{GPU}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Motherboard:</h4></label>
+        <input type="text" th:field="*{motherboard}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>RAM:</h4></label>
+        <input type="text" th:field="*{RAM}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has HDD:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasHDD}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>HDD:</h4></label>
+        <input type="text" th:field="*{HDD}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has SSD:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasSSD}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>SSD:</h4></label>
+        <input type="text" th:field="*{SSD}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Case:</h4></label>
+        <input type="text" th:field="*{towerCase}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Power Supply:</h4></label>
+        <input type="text" th:field="*{powerSupply}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Cooling:</h4></label>
+        <input type="text" th:field="*{cooling}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Front Panel:</h4></label>
+            <input type="text" th:field="*{frontPanel}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Back Panel:</h4></label>
+            <input type="text" th:field="*{backPanel}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Networking:</h4></label>
+            <input type="text" th:field="*{networking}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has Optic Unit:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasOpticUnit}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>Optic Unit:</h4></label>
+        <input type="text" th:field="*{opticUnit}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has Operating System:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasOperatingSystem}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>Operating System Name:</h4></label>
+        <input type="text" th:field="*{operatingSystemName}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Price:</h4></label>
+        <input type="text" th:field="*{price}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Image Source:</h4></label>
+        <input type="text" th:field="*{imageSource}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has Payment Plan:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasPaymentPlan}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+
+
+        <!--    <div th:each="role : *{roles}">-->
+        <!--      <input type="hidden" th:field="${role}"/>-->
+        <!--    </div>-->
+        <!--    <input type="hidden" th:field="*{carts}"/>-->
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="/admin-page" type="button" class="btn btn-secondary">Back</a>
+
+    </form>
+</div>
+
+
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+    function openTab(evt, tabName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+
+</body>
+</html>

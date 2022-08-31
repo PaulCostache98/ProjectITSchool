@@ -48,7 +48,7 @@ public class LoginController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "login";
         }
-        return "index";
+        return "redirect:/index";
     }
 
     @RequestMapping("/login-error")

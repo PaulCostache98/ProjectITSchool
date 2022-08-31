@@ -7,6 +7,7 @@ import lombok.Setter;
 import ro.itschool.entity.Tower;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,9 +17,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CartDTO {
 
-    private Set<Tower> towers;
+    private List<Tower> towers;
 
-    private Double price;
+    private int price;
 
 
 }

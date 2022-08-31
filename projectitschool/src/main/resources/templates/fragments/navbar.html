@@ -18,23 +18,26 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li sec:authorize="isAnonymous()"><a  href="index-logged-out">Home</a></li>
-                    <li sec:authorize="isAuthenticated()"><a  href="index">Home</a></li>
-                    <li><a href="about">About</a></li>
-                    <li><a href="shop">Shop</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li sec:authorize="isAnonymous()"><a  href="/index-logged-out">Home</a></li>
+                    <li sec:authorize="isAuthenticated()"><a  href="/index">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/shop">Shop</a></li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/admin-page">Admin Page</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li sec:authorize="isAnonymous()"><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li sec:authorize="isAnonymous()"><a href="/register"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
+                    <li sec:authorize="isAnonymous()"><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li sec:authorize="isAuthenticated()"><a href="account" th:text = "${user}"></a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/account" th:text = "${user}"></a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li sec:authorize="isAuthenticated()"><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li sec:authorize="isAuthenticated()"><a href="#" data-toggle="modal" data-target=".shopping-cart">Cart</a></li>
+                    <li sec:authorize="isAuthenticated()"><a href=".shopping-cart" data-toggle="modal" data-target=".shopping-cart">Cart</a></li>
                 </ul>
             </div>
         </div>

@@ -29,37 +29,8 @@
   </style>
 </head>
 <body>
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Logo</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li sec:authorize="isAnonymous()"><a  href="index-logged-out">Home</a></li>
-                <li sec:authorize="isAuthenticated()"><a  href="index">Home</a></li>
-                <li class="active"><a href="about">About</a></li>
-                <li><a href="shop">Shop</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="isAnonymous()"><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="isAuthenticated()"><a href="account" th:text = "${user.getFullName()}"></a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li sec:authorize="isAuthenticated()"><a href="logout"><span class="glyphicon glyphicon-log-in"></span> Sign out</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div th:replace="fragments/navbar.html :: topnav"></div>
+<div th:replace="/_modals.html :: shopping-cart-modal"></div>
 <div class="about-section">
     <h1>A brief description of this Project</h1>
     <p>Below you will find a few pointers describing what this project is about.</p>
@@ -67,6 +38,9 @@
 
 <h2 style="text-align:center">A Personal Computer Shop</h2>
 <div class="about-section">
-    <h3>The temperature outside today is 29 degrees Celsius</h3>
-    <p>It's hot out there</p>
+    <h3>Simulating a Computer Shop</h3>
+    <p>Users will be able to browse Computers, add them to Carts and buy them. Furthermore they will be able to check their Purchase History,
+    their Account Summary and Delete their account if they choose.
+
+    Admins will be able to edit/add users and towers as well as remove them. Admins are also able to do the same actions users can.</p>
 </div>

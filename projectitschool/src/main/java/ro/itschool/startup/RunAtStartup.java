@@ -1,18 +1,21 @@
 package ro.itschool.startup;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import ro.itschool.entity.Cart;
 import ro.itschool.entity.MyUser;
 import ro.itschool.entity.Role;
 import ro.itschool.entity.Tower;
+import ro.itschool.service.CartService;
 import ro.itschool.service.TowerService;
 import ro.itschool.service.UserService;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.FileReader;
+import java.util.*;
 
 @Component
 public class RunAtStartup {
@@ -22,6 +25,9 @@ public class RunAtStartup {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CartService cartService;
 
     @EventListener(ContextRefreshedEvent.class)
     public void contextRefreshedEvent() {
@@ -42,11 +48,11 @@ public class RunAtStartup {
         tower.setTowerCase("Ryzix Cool Blue");
         tower.setPowerSupply("550W");
         tower.setCooling("Nitrogen");
-        List<String> frontPanel = List.of("2x USB", "3x VGA", "1x USB 3.0");
+        String frontPanel = "2x USB, 3x VGA, 1x USB 3.0";
         tower.setFrontPanel(frontPanel);
-        List<String> backPanel = List.of("5x USB", "2x HDMI", "3x USB 3.0", "1x Audio Jack");
+        String backPanel = "5x USB, 2x HDMI, 3x USB 3.0, 1x Audio Jack";
         tower.setBackPanel(backPanel);
-        List<String> networking = List.of("WiFi", "LAN");
+        String networking = "WiFi, LAN";
         tower.setNetworking(networking);
         tower.setHasOpticUnit(false);
         tower.setHasOperatingSystem(true);
@@ -66,11 +72,14 @@ public class RunAtStartup {
 
         MyUser myUser = new MyUser();
         myUser.setUsername("user0");
+        myUser.setId(1L);
         myUser.setPassword("user0");
         myUser.setRandomToken("randomToken");
         final Role roleUser = new Role("ROLE_USER");
+        final Role roleAdmin = new Role("ROLE_ADMIN");
         final Set<Role> roles = new HashSet<>();
         roles.add(roleUser);
+        roles.add(roleAdmin);
         myUser.setRoles(roles);
         myUser.setEnabled(true);
         myUser.setAccountNonExpired(true);
@@ -80,9 +89,43 @@ public class RunAtStartup {
         myUser.setFullName("Bahaohha");
         myUser.setPasswordConfirm("user0");
         myUser.setRandomTokenEmail("randomToken");
-
+        Cart cart = new Cart();
+        cart.setPaid(true);
+        cart.setTowers(List.of(tower));
+        Set<Cart> carts = new HashSet<>();
+        cart.calculatePrice();
+        carts.add(cart);
+        myUser.setCarts(carts);
         userService.saveUser(myUser);
+        cartService.saveCart(cart);
+        cart.setUser(myUser);
+        tower.setCarts(Collections.singleton(cart));
+        towerService.saveTower(tower);
+        cartService.saveCart(cart);
+        List<Tower> towers = readDataLineByLine("projectitschool/src/main/resources/towers.csv");
+        System.out.println(towers);
+        for (Tower towerSave: towers) {
+            towerService.saveTower(towerSave);
+        }
+}
 
+    public static List<Tower> readDataLineByLine(String fileName) {
+        List<Tower> towerList = new ArrayList<>();
+        try (FileReader fileReader = new FileReader(fileName)) {
+            CSVReader csvReader = new CSVReaderBuilder(fileReader).withSkipLines(1).build();
+            String[] nextRecord;
 
+            while ((nextRecord = csvReader.readNext()) != null) {
+                Tower tower = new Tower(nextRecord[0], nextRecord[1], Boolean.parseBoolean(nextRecord[2]), Integer.parseInt(nextRecord[3]), nextRecord[4],
+                        nextRecord[5], nextRecord[6], nextRecord[7], Boolean.parseBoolean(nextRecord[8]), nextRecord[9], Boolean.parseBoolean(nextRecord[10]),
+                        nextRecord[11], nextRecord[12], nextRecord[13], nextRecord[14], nextRecord[15], nextRecord[16], nextRecord[17],
+                        Boolean.parseBoolean(nextRecord[18]), nextRecord[19], Boolean.parseBoolean(nextRecord[20]), nextRecord[21], Integer.parseInt(nextRecord[22]),
+                        nextRecord[23], Boolean.parseBoolean(nextRecord[24]));
+                towerList.add(tower);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return towerList;
     }
 }

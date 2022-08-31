@@ -2,6 +2,7 @@ package ro.itschool.service;
 
 import org.springframework.stereotype.Service;
 import ro.itschool.entity.MyUser;
+import ro.itschool.exception.UserNotFoundException;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface UserService {
 
     MyUser findUserByEmail(String email);
+
+    MyUser findById(Long id) throws UserNotFoundException;
 
     MyUser findUserByUserName(String username);
 

@@ -2,6 +2,8 @@ package ro.itschool.service.impl;
 
 import org.springframework.stereotype.Service;
 import ro.itschool.entity.Tower;
+import ro.itschool.exception.TowerNotFoundException;
+import ro.itschool.repository.CartRepository;
 import ro.itschool.repository.TowerRepository;
 import ro.itschool.service.TowerService;
 
@@ -12,9 +14,14 @@ public class TowerServiceImpl implements TowerService {
 
     private final TowerRepository towerRepository;
 
+    private final CartRepository cartRepository;
 
-    public TowerServiceImpl(TowerRepository towerRepository) {
+
+
+
+    public TowerServiceImpl(TowerRepository towerRepository, CartRepository cartRepository) {
         this.towerRepository = towerRepository;
+        this.cartRepository = cartRepository;
     }
 
 
@@ -34,7 +41,7 @@ public class TowerServiceImpl implements TowerService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(long id) throws TowerNotFoundException {
         towerRepository.deleteById(id);
     }
 

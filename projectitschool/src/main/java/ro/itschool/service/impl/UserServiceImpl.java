@@ -46,6 +46,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public MyUser findById(Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
     public MyUser findUserByUserName(String userName) {
         return userRepository.findByUsernameIgnoreCase(userName);
     }

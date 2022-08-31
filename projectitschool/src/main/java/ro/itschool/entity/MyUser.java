@@ -84,6 +84,7 @@ public class MyUser implements UserDetails {
         this.accountNonLocked = myUser.isAccountNonLocked();
         this.credentialsNonExpired = myUser.isCredentialsNonExpired();
         this.email = myUser.getEmail();
+        this.carts = myUser.getCarts();
     }
 
     public MyUser(String username, String password, boolean enabled, boolean accountNonExpired,
@@ -100,6 +101,10 @@ public class MyUser implements UserDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public boolean isAdmin() {
+        return this.getRoles().stream().map(Role::getName).toList().contains("ROLE_ADMIN");
     }
 
 

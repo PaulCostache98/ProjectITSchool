@@ -1,14 +1,13 @@
 package ro.itschool.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -18,15 +17,20 @@ import java.util.UUID;
 public class Cart {
 
     @Id
-    @GeneratedValue
-    @Column(name="cart_id")
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_id")
+    private Long id;
 
-    private Set<Tower> towers;
+    @ManyToMany(mappedBy = "carts")
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Tower> towers;
 
-    private Double price;
+    private int price;
 
     private boolean isPaid;
+
+    private boolean isActive;
 
     private LocalDateTime createdAt;
 
@@ -36,9 +40,17 @@ public class Cart {
     private MyUser user;
 
     public Cart() {
-        this.towers = new HashSet<Tower>();
+        this.towers = new ArrayList<Tower>();
         this.createdAt = LocalDateTime.now();
-        this.price = 0D;
+        this.price = 0;
         this.isPaid = false;
+    }
+
+    public void calculatePrice() {
+        if (this.price == 0) {
+            for (Tower tower : this.towers) {
+                this.price += tower.getPrice();
+            }
+        }
     }
 }

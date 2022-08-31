@@ -9,14 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ro.itschool.entity.Cart;
 import ro.itschool.entity.MyUser;
 import ro.itschool.entity.Tower;
 import ro.itschool.service.TowerService;
 import ro.itschool.service.UserService;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @Controller
 public class IndexController {
@@ -31,8 +30,7 @@ public class IndexController {
     String indexLoggedOut(Model model) {
         Random random = new Random();
         List<Tower> towerList = towerService.findAll();
-        towerList.remove(0);
-        Tower tower1 = towerService.findById(1);
+        Tower tower1 = towerList.remove(0);
         model.addAttribute("towers", towerList);
         model.addAttribute("tower1", tower1);
         return "index-logged-out";
@@ -41,10 +39,15 @@ public class IndexController {
     @RequestMapping("/index")
     String index(Model model) {
         List<Tower> towerList = towerService.findAll();
-        Tower tower1 = towerList.remove(1);
+        Tower tower1 = towerList.remove(0);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<Tower> towers = userService.findUserByUserName(authentication.getName()).getCarts().stream().filter(Cart::isActive)
+                .map(Cart::getTowers).toList().stream().flatMap(Collection::stream).toList();
+
+        model.addAttribute("cartTowers", towers);
         model.addAttribute("towers", towerList);
         model.addAttribute("tower1", tower1);
-        model.addAttribute("name", userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName()).getFullName());
+        model.addAttribute("user", userService.findUserByUserName(SecurityContextHolder.getContext().getAuthentication().getName()).getFullName());
 
         return "index";
     }

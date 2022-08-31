@@ -1,7 +1,9 @@
 package ro.itschool.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import ro.itschool.entity.Tower;
+import ro.itschool.exception.TowerNotFoundException;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public interface TowerService {
 
     List<Tower> findAll();
 
-    void deleteById(long id);
+    void deleteById(long id) throws TowerNotFoundException;
 
     Tower saveTower(Tower tower);
 

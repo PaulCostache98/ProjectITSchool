@@ -53,30 +53,50 @@
 <div th:replace="/_modals.html :: shopping-cart-modal"></div>
 
 <div class="tab">
-    <button class="tablinks" onclick="openTab(event, 'accountSummary')" id="defaultOpen">Account Summary</button>
-    <button class="tablinks" onclick="openTab(event, 'purchaseHistory')">Purchase History</button>
-    <button class="tablinks" onclick="openTab(event, 'deleteAccount')">Delete Account</button>
+    <button class="tablinks" onclick="openTab(event, 'usersTab')">Users</button>
+    <button class="tablinks" onclick="openTab(event, 'towersTab')">Towers</button>
 </div>
 <!-- Tab content -->
-<div id="accountSummary" class="tabcontent">
-    <h3 th:text="${userDetails.getFullName()}"></h3>
-    <p>Username: <span th:text="${userDetails.getUsername()}"></span></p>
-    <p>Full Name: <span th:text="${userDetails.getFullName()}"></span></p>
-    <p>Email: <span th:text="${userDetails.getEmail()}"></span></p>
-    <p>Roles: <span th:each="role : ${userDetails.getRoles()}" th:text="${role.getName().replaceFirst('ROLE_', '')} + ' '"></span></p>
+<div id="usersTab" class="tabcontent">
+    <a href="/add-user" type="button"
+       class="btn btn-primary btn-sm">Add User</a>
+    <div th:each="userIteration : ${users}">
+    <h3 th:text="${userIteration.getFullName()}"></h3>
+    <p>Username: <span th:text="${userIteration.getUsername()}"></span></p>
+    <p>Full Name: <span th:text="${userIteration.getFullName()}"></span></p>
+    <p>Email: <span th:text="${userIteration.getEmail()}"></span></p>
+    <p>Roles: <span th:each="role : ${userIteration.getRoles()}" th:text="${role.getName().replaceFirst('ROLE_', '')} + ' '"></span></p>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{'/update-user/' + ${userIteration.id}}"
+               class="btn btn-success btn-sm">Update</a>
+            <a  th:href="@{'/delete-user/' + ${userIteration.id}}"
+               class="btn btn-danger btn-sm" th:if="${!userIteration.isAdmin()}">Delete</a>
+            <a  th:href="@{'/make-admin/' + ${userIteration.id}}"
+                class="btn btn-info btn-sm" th:if="${!userIteration.isAdmin()}">Make Admin</a>
+        </div>
+    </div>
+</div>
+<div id="towersTab" class="tabcontent">
+    <div class="container">
+        <div class="row">
+            <div th:each="tower : ${towers}">
+                <div class="col-sm-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" th:text="${tower.name}"></div>
+                        <div class="panel-body"><a th:href="@{/towers/{id}(id=${tower.id})}"><img th:src=${tower.imageSource} class="img-responsive" style="width:100%" alt="Image"></a></div>
+                        <div sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{'/update-tower/' + ${tower.id}}"
+                               class="btn btn-success btn-sm">Update</a>
+                            <a  th:href="@{'/delete-tower/' + ${tower.id}}"
+                                class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div id="purchaseHistory" class="tabcontent">
-    <h3>Past Shopping Carts</h3>
-    <p th:each="cart : ${shoppingCarts}">Cart contained:<span th:if="${cart.isPaid()==true}"><span th:each="tower : ${cart.getTowers()}">
-    <span th:text="${tower.name}"></span></span></span><span class="price" th:text="' ' + ${cart.price} + '$'"></span></p>
-</div>
-
-<div id="deleteAccount" class="tabcontent">
-    <h3>Delete Your Account</h3>
-    <p>Are you sure you wish to delete your account?</p>
-    <a href="/delete-account"><button class="btn btn-danger">Yes, I'm sure</button></a>
-</div>
 
 
 

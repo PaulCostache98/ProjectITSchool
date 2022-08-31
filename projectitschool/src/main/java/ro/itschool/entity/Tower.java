@@ -1,10 +1,16 @@
 package ro.itschool.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -12,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "id")
 public class Tower {
 
     @Id
@@ -33,19 +40,26 @@ public class Tower {
     private String towerCase;
     private String powerSupply;
     private String cooling;
-    private List<String> frontPanel;
-    private List<String> backPanel;
-    private List<String> networking;
+    private String frontPanel;
+    private String backPanel;
+    private String networking;
     private boolean hasOpticUnit;
     private String opticUnit;
     private boolean hasOperatingSystem;
     private String operatingSystemName;
 
-    private int price;
+    private Integer price;
 
     private String imageSource;
 
     private boolean hasPaymentPlan;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "towers_carts",
+            joinColumns = @JoinColumn(name = "tower_id", referencedColumnName = "tower_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id", referencedColumnName = "cart_id"))
+    @ToString.Exclude
+    private Set<Cart> carts;
 
     public Tower(String imageSource) {
         this.imageSource = imageSource;
@@ -81,6 +95,39 @@ public class Tower {
         this.imageSource = tower.getImageSource();
 
         this.hasPaymentPlan = tower.isHasPaymentPlan();
+        this.carts = tower.getCarts();
+    }
+
+    public Tower(String name, String model, boolean hasWarranty, int warrantyLength, String processor, String GPU, String motherboard, String RAM,
+                 boolean hasHDD, String HDD, boolean hasSSD, String SSD, String towerCase, String powerSupply, String cooling, String frontPanel,
+                 String backPanel, String networking, boolean hasOpticUnit, String opticUnit, boolean hasOperatingSystem, String operatingSystemName,
+                 Integer price, String imageSource, boolean hasPaymentPlan) {
+        this.name = name;
+        this.model = model;
+        this.hasWarranty = hasWarranty;
+        this.warrantyLength = warrantyLength;
+        this.processor = processor;
+        this.GPU = GPU;
+        this.motherboard = motherboard;
+        this.RAM = RAM;
+        this.hasHDD = hasHDD;
+        this.HDD = HDD;
+        this.hasSSD = hasSSD;
+        this.SSD = SSD;
+        this.towerCase = towerCase;
+        this.powerSupply = powerSupply;
+        this.cooling = cooling;
+        this.frontPanel = frontPanel;
+        this.backPanel = backPanel;
+        this.networking = networking;
+        this.hasOpticUnit = hasOpticUnit;
+        this.opticUnit = opticUnit;
+        this.hasOperatingSystem =  hasOperatingSystem;
+        this.operatingSystemName = operatingSystemName;
+        this.price = price;
+        this.imageSource = imageSource;
+        this.hasPaymentPlan = hasPaymentPlan;
+
     }
 
 }
