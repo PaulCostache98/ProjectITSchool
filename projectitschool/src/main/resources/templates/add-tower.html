@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Add Tower</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <style>
+
+    Body { margin: 0; font-family: "Optima", sans-serif, color: black
+    }
+    h1 { font-size: 40px; color: black; font-family: "Optima", sans-serif;
+    }
+    h2 {font-size: 16px; color: black  ; font-family: "Optima", sans-serif;
+    }
+
+    </style>
+
+</head>
+<body><br><br>
+<div class="container-fluid text-center">
+    <div class="text-center"><h1>Add Tower</h1></div>
+
+    <form action="#" th:action="@{/add-tower}" th:object="${tower}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label class="col-sm-4 col-form-label"><h4>Name:</h4></label>
+        <input type="text" th:field="*{name}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Model:</h4></label>
+        <input type="text" th:field="*{model}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Warranty:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasWarranty}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>Warranty Length:</h4></label>
+        <input type="text" th:field="*{warrantyLength}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Processor:</h4></label>
+        <input type="text" th:field="*{processor}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>GPU:</h4></label>
+        <input type="text" th:field="*{GPU}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Motherboard:</h4></label>
+        <input type="text" th:field="*{motherboard}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>RAM:</h4></label>
+        <input type="text" th:field="*{RAM}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has HDD:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasHDD}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>HDD:</h4></label>
+        <input type="text" th:field="*{HDD}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has SSD:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasSSD}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>SSD:</h4></label>
+        <input type="text" th:field="*{SSD}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Case:</h4></label>
+        <input type="text" th:field="*{towerCase}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Power Supply:</h4></label>
+        <input type="text" th:field="*{powerSupply}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Cooling:</h4></label>
+        <input type="text" th:field="*{cooling}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Front Panel:</h4></label>
+        <input type="text" th:field="*{frontPanel}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Back Panel:</h4></label>
+        <input type="text" th:field="*{backPanel}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Networking:</h4></label>
+        <input type="text" th:field="*{networking}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has Optic Unit:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasOpticUnit}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>Optic Unit:</h4></label>
+        <input type="text" th:field="*{opticUnit}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has Operating System:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasOperatingSystem}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+        <label class="col-sm-4 col-form-label"><h4>Operating System Name:</h4></label>
+        <input type="text" th:field="*{operatingSystemName}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Price:</h4></label>
+        <input type="text" th:field="*{price}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Image Source:</h4></label>
+        <input type="text" th:field="*{imageSource}" class="form-control col-4 mb-4"/>
+        <label class="col-sm-4 col-form-label"><h4>Has Payment Plan:</h4></label>
+        <select class="form-control col-4 mb-4" th:field="*{hasPaymentPlan}">
+            <option th:value="1">true</option>
+            <option th:value="0">false</option>
+        </select>
+
+
+        <!--    <div th:each="role : *{roles}">-->
+        <!--      <input type="hidden" th:field="${role}"/>-->
+        <!--    </div>-->
+        <!--    <input type="hidden" th:field="*{carts}"/>-->
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="/admin-page" type="button" class="btn btn-secondary">Back</a>
+
+    </form>
+</div>
+</body>
+</html>

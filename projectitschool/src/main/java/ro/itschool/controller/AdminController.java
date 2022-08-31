@@ -126,7 +126,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "/add-user")
-    public String registerUser(@ModelAttribute("user") @RequestBody MyUser user) {
+    public String addUser(@ModelAttribute("user") @RequestBody MyUser user) {
             user.setRoles(Collections.singleton(new Role("ROLE_USER")));
             userService.saveUser(user);
             return "redirect:/admin-page";
@@ -166,6 +166,21 @@ public class AdminController {
     public String saveTower(@ModelAttribute Tower tower, Model model) {
         Set<Cart> carts = towerService.findById(tower.getId()).getCarts();
         tower.setCarts(carts);
+        towerService.saveTower(tower);
+        return "redirect:/admin-page";
+    }
+
+    @GetMapping("/add-tower")
+    public String addTower(Model model) {
+        Tower tower = new Tower();
+
+        model.addAttribute("tower", tower);
+
+        return "add-tower";
+    }
+
+    @PostMapping(value = "/add-tower")
+    public String addTower(@ModelAttribute("tower") @RequestBody Tower tower) {
         towerService.saveTower(tower);
         return "redirect:/admin-page";
     }
