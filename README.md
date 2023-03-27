@@ -31,7 +31,7 @@ Upon entering the Shop page, you will see a collection of towers for sale.
 You can click on any to view more information and possibly buy them.
 
 To buy anything, you will need to login.
-If you do not have ann account, the Register button is where you should go.
+If you do not have an account, the Register button is where you should go.
 The register form is straight forward. It will send an email to your provided one after successfully filling the form, which you'll have to confirm.
 The email will redirect you to an activation page, after which you'll be redirected to the login page.
 
