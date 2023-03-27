@@ -107,6 +107,7 @@ public class RunAtStartup {
         for (Tower towerSave: towers) {
             towerService.saveTower(towerSave);
         }
+
 }
 
     public static List<Tower> readDataLineByLine(String fileName) {

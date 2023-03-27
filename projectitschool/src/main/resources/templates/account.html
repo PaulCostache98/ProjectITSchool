@@ -55,7 +55,7 @@
 <div class="tab">
     <button class="tablinks" onclick="openTab(event, 'accountSummary')" id="defaultOpen">Account Summary</button>
     <button class="tablinks" onclick="openTab(event, 'purchaseHistory')">Purchase History</button>
-    <button class="tablinks" onclick="openTab(event, 'deleteAccount')" th:if="${!userDetails.isAdmin()}">Delete Account</button>
+<!--    <button class="tablinks" onclick="openTab(event, 'deleteAccount')" th:if="${!userDetails.isAdmin()}">Delete Account</button>-->
 </div>
 <!-- Tab content -->
 <div id="accountSummary" class="tabcontent">
@@ -72,11 +72,11 @@
     <span th:text="${tower.name}"></span></span></span><span class="price" th:text="' ' + ${cart.price} + '$'"></span></p>
 </div>
 
-<div id="deleteAccount" class="tabcontent" th:if="${!userDetails.isAdmin()}">
-    <h3>Delete Your Account</h3>
-    <p>Are you sure you wish to delete your account?</p>
-    <a href="/delete-account"><button class="btn btn-danger">Yes, I'm sure</button></a>
-</div>
+<!--<div id="deleteAccount" class="tabcontent" th:if="${!userDetails.isAdmin()}">-->
+<!--    <h3>Delete Your Account</h3>-->
+<!--    <p>Are you sure you wish to delete your account?</p>-->
+<!--    <a href="/delete-account"><button class="btn btn-danger">Yes, I'm sure</button></a>-->
+<!--</div>-->
 
 
 

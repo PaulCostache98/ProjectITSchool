@@ -63,7 +63,7 @@ public class MyUser implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy="user")
     @ToString.Exclude
     private Set<Cart> carts;
 
